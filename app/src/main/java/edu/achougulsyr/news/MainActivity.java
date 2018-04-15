@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         articlesDB.execSQL("CREATE TABLE IF NOT EXISTS articles (id INTEGER PRIMARY KEY, articleId INTEGER, url VARCHAR, title VARCHAR,content VARCHAR)");
 
-        updateListView();
+
 
         DownloadTask task = new DownloadTask();
         try {
@@ -72,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        updateListView();
     }
 
     public void updateListView(){
@@ -144,17 +145,6 @@ public class MainActivity extends AppCompatActivity {
                     String articleURL = jsonObject.getString("url");
                     String articleContent="";
 
-                    /*url = new URL(articleURL);
-                    urlConnection = (HttpURLConnection)url.openConnection();
-                    in = urlConnection.getInputStream();
-                    reader = new InputStreamReader(in);
-                    data =reader.read();
-                    String articleContent="";
-                    while(data!=-1){
-                        char current = (char)data;
-                        articleContent = articleContent+current;
-                        data=reader.read();
-                    }*/
 
                     articleIds.add(Integer.valueOf(articleId));
                     articleTitles.put(Integer.valueOf(articleId), articleTitle);
@@ -166,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
                     statement.bindString(3,articleTitle);
                     statement.bindString(4,articleContent);
                     statement.execute();
-
 
                 }
 
@@ -191,19 +180,5 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
 
